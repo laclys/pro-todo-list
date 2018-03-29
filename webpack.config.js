@@ -1,6 +1,7 @@
 const path = require('path')
 const HTMLPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
+const ExtractPlugin = require('extract-text-webpack-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -20,27 +21,6 @@ const config = {
       {
         test: /\.jsx$/,
         loader: 'babel-loader'
-      },
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
-      },
-      {
-        test: /\.styl/,
-        use: [
-          'style-loader',
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          'stylus-loader'
-        ]
       },
       {
         test: /\.(gif|jpg|jpeg|png|svg)$/,
@@ -67,6 +47,20 @@ const config = {
 }
 
 if (isDev) {
+  config.module.rules.push({
+    test: /\.styl/,
+    use: [
+      'style-loader',
+      'css-loader',
+      {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: true
+        }
+      },
+      'stylus-loader'
+    ]
+  })
   config.devtool = '#cheap-module-eval-source-map'
   config.devServer = {
     port: 8000,
@@ -79,6 +73,29 @@ if (isDev) {
   config.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
+  )
+} else {
+  config.output.filename = '[name].[chunkhash:8].js'
+  config.module.rules.push(
+    {
+      test: /\.styl/,
+      use: ExtractPlugin.extract({
+        fallback: 'style-loader',
+        use: [
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          'stylus-loader'
+        ]
+      })
+    }
+  )
+  config.plugins.push(
+    new ExtractPlugin('styles.[contentHash:8].css')
   )
 }
 
