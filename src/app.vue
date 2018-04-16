@@ -2,7 +2,7 @@
   <div id="app" >
     <div id="cover" ></div>
     <Header></Header>
-    <p>{{count}}</p>
+    <p>{{fullName}} {{counter}}</p>
     <router-link to="/app" >app</router-link>
     <router-link to="/login" >login</router-link>
     <!-- <Todo></Todo> -->
@@ -14,6 +14,11 @@
 </template>
 
 <script>
+import {
+  mapState,
+  mapGetters
+} from 'vuex'
+
 import Header from './layout/header.vue'
 import Footer from './layout/footer.jsx'
 // import Todo from './views/todo/todo.vue'
@@ -32,9 +37,16 @@ export default {
     }, 1000)
   },
   computed: {
-    count () {
-      return this.$store.state.count
-    }
+    ...mapState({
+      counter: (state) => state.count
+    }), // 很方便的在组件中使用数据
+    // count () {
+    //   return this.$store.state.count
+    // },
+    ...mapGetters(['fullName'])
+    // fullName () {
+    //   return this.$store.getters.fullName
+    // }
   }
 }
 </script>
