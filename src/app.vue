@@ -30,11 +30,15 @@ export default {
   },
   mounted () {
     // console.log(this.$route)
-    console.log(this.$store)
-    let i = 1
-    setInterval(() => {
-      this.$store.commit('updateCount', i++)
-    }, 1000)
+    // console.log(this.$store)
+    // let i = 1
+    // setInterval(() => {
+    //   this.$store.commit('updateCount', i++)
+    // }, 1000)
+    this.$store.dispatch('updateCountAsync',{
+      num: 5,
+      time: 2000
+    })
   },
   computed: {
     ...mapState({
