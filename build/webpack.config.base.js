@@ -6,7 +6,7 @@ const isDev = process.env.NODE_ENV === 'development'
 
 const config = {
   target: 'web',
-  entry: path.join(__dirname, '../src/index.js'),
+  entry: path.join(__dirname, '../src/client-entry.js'),
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, '../dist'),
