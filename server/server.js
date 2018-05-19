@@ -3,6 +3,8 @@ const send = require('koa-send')
 
 const path = require('path')
 
+const staticRouter = require('./router/static')
+
 // const pageRouter = require('./router/dev-ssr')
 
 const app = new koa()
@@ -24,12 +26,16 @@ app.use(async(ctx, next) => {
   }
 })
 
+app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
+
 let pageRouter
 if(isDev) {
   pageRouter = require('./router/dev-ssr')
 } else {
   pageRouter = require('./router/ssr')
 }
+
+app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 
 app.use(async (ctx, next) => {
   if (ctx.path === '/favicon.ico') {
@@ -41,7 +47,6 @@ app.use(async (ctx, next) => {
   }
 })
 
-app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 
 const HOST = process.env.HOST || '0.0.0.0'
 const PORT = process.env.PORT || 3333
