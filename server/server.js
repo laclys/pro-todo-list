@@ -3,7 +3,7 @@ const send = require('koa-send')
 
 const path = require('path')
 
-const pageRouter = require('./router/dev-ssr')
+// const pageRouter = require('./router/dev-ssr')
 
 const app = new koa()
 
@@ -23,6 +23,13 @@ app.use(async(ctx, next) => {
     }
   }
 })
+
+let pageRouter
+if(isDev) {
+  pageRouter = require('./router/dev-ssr')
+} else {
+  pageRouter = require('./router/ssr')
+}
 
 app.use(async (ctx, next) => {
   if (ctx.path === '/favicon.ico') {
