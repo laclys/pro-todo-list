@@ -6,6 +6,7 @@
     <transition name="fade">
       <router-view />
     </transition>
+    <notification content="test notify" />
     <Footer></Footer>
   </div>
 </template>
