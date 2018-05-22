@@ -6,7 +6,8 @@
     <transition name="fade">
       <router-view />
     </transition>
-    <notification content="test notify" />
+    <!-- <notification content="test notify" /> -->
+    <button @click="notify">click me</button>
     <Footer></Footer>
   </div>
 </template>
@@ -32,20 +33,30 @@ export default {
     // Todo
   },
   mounted () {
+    // this.$notify({
+    //   content: 'test $notify',
+    //   btn: 'close'
+    // })
     // console.log(this.$route)
     // console.log(this.$store)
     // let i = 1
     // setInterval(() => {
     //   this.updateCount(i++)
     // }, 1000)
-    this.updateCountAsync({
-      num: 5,
-      time: 2000
-    })
+    // this.updateCountAsync({
+    //   num: 5,
+    //   time: 2000
+    // })
   },
   methods: {
     ...mapActions(['updateCountAsync']),
-    ...mapMutations(['updateCount'])
+    ...mapMutations(['updateCount']),
+    notify () {
+    this.$notify({
+      content: 'test $notify',
+      btn: 'close'
+    })
+    }
   },
   computed: {
     ...mapState({
