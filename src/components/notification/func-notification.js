@@ -21,11 +21,14 @@ export default {
           this.visible = false
         }, this.autoClose)
       }
-    }
-  },
-  clearTimer () {
-    if (this.timer) {
-      clearTimeout(this.timer)
+    },
+    clearTimer () {
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
+    },
+    afterEnter() {
+      this.height = this.$el.offsetHeight
     }
   },
   beforeDestory () {
@@ -34,7 +37,9 @@ export default {
   data() {
     return {
       verticalOffset: 0,
-      autoClose: 3000
+      autoClose: 3000,
+      height: 0,
+      visible: false
     }
   }
 }

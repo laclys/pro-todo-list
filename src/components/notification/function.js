@@ -8,10 +8,19 @@ let seed = 1
 
 const removeInstance = (instance) => {
   if (!instance) return
-  const len = instance.length
+  const len = instances.length
   const index = instances.findIndex(inst => instance.id === inst.id)
-
+  console.log(index)
   instances.splice(index, 1)
+
+  if (len <= 1) return
+  const removeHeight = instance.vm.height
+  // console.log("removeHeight", removeHeight)
+  for (let i = index; i < len - 1; i++) {
+    instances[i].verticalOffset = 
+      parseInt(instances[i].verticalOffset) - removeHeight - 16
+      console.log(instances[i].verticalOffset)
+  }
 }
 
 const nofity = (opt) => {
@@ -29,6 +38,7 @@ const nofity = (opt) => {
   instance.id = id
   instance.vm = instance.$mount()
   document.body.appendChild(instance.vm.$el)
+  instance.vm.visible = true
 
   let verticalOffset = 0
   instances.forEach(item => {
