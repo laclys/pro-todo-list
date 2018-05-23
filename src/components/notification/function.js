@@ -6,6 +6,14 @@ const NotificationConstructor = Vue.extend(Component)
 const instances = []
 let seed = 1
 
+const removeInstance = (instance) => {
+  if (!instance) return
+  const len = instance.length
+  const index = instances.findIndex(inst => instance.id === inst.id)
+
+  instances.splice(index, 1)
+}
+
 const nofity = (opt) => {
   if (Vue.prototype.$isServer) return // 判断是否在服务端，服务端直接return
 
@@ -29,6 +37,14 @@ const nofity = (opt) => {
   verticalOffset += 16
   instance.verticalOffset = verticalOffset
   instances.push(instance)
+  instance.vm.$on('closed', () => {
+    removeInstance(instance)
+    document.body.removeChild(instance.vm.$el) //删除dom对象
+    instance.vm.$destroy() // 删除vm对象
+  })
+  instance.vm.$on('close', () => {
+    instance.vm.visible = false
+  })
   return instance.vm
 }
 

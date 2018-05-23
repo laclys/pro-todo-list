@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade">
+  <transition name="fade" @after-leave="afterLeave">
     <div
       class="notification"
       :style="style"
@@ -38,6 +38,9 @@ export default {
     handleClose(e) {
       e.preventDefault()
       this.$emit('close')
+    },
+    afterLeave() {
+      this.$emit('closed')
     }
   }
 }
