@@ -9,8 +9,13 @@ let seed = 1
 const nofity = (opt) => {
   if (Vue.prototype.$isServer) return // 判断是否在服务端，服务端直接return
 
+  const {autoClose, ...rest} = opt
+
   const instance = new NotificationConstructor({
-    propsData: opt
+    propsData: {...rest},
+    data: {
+      autoClose: autoClose === undefined ? 3000 : autoClose
+    }
   })
   const id = `notification_${seed++}`
   instance.id = id

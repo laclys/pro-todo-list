@@ -3,6 +3,7 @@
     <div
       class="notification"
       :style="style"
+      v-show="visible"
     >
       <span class="content" >{{content}}</span>
       <a class="btn" @click="handleClose">{{btn}}</a>
@@ -21,6 +22,11 @@ export default {
     btn: {
       type: String,
       default: 'Close'
+    }
+  },
+  data() {
+    return {
+      visible: true
     }
   },
   computed: {
