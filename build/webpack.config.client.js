@@ -26,6 +26,7 @@ const devServer = {
   overlay: {
     errors: true
   },
+  headers: { 'Access-Control-Allow-Origin': '*' }, //允许跨域
   hot: true,
   historyApiFallback: {
     index: '/public/index.html'
