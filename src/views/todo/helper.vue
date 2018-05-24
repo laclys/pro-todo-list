@@ -1,7 +1,7 @@
 <template>
   <div class="helper" >
     <span class="left">{{unFinishedTodoListLength}} item left</span>
-    <span class="tabs">
+    <!-- <span class="tabs">
       <span
         v-for="state in states"
         :key="state"
@@ -10,7 +10,7 @@
       >
         {{state}}
       </span>
-    </span>
+    </span> -->
     <span class="clear" @click="clearAllCompleted">Clear Completed</span>
   </div>
 </template>
@@ -26,11 +26,11 @@ export default {
       required: true,
     }
   },
-  data() {
-    return {
-      states: ['all', 'active', 'completed']
-    }
-  },
+  // data() {
+  //   return {
+  //     states: ['all', 'active', 'completed']
+  //   }
+  // },
   computed: {
     unFinishedTodoListLength() {
       return this.todos.filter(todo => !todo.comoleted).length
@@ -39,9 +39,6 @@ export default {
   methods: {
     clearAllCompleted() {
       this.$emit('clearAllCompleted')
-    },
-    toggleFilter(state) {
-      this.$emit('toggle', state)
     }
   }
 }

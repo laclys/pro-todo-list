@@ -19,6 +19,9 @@ export default {
   //     value: this.value
   //   }
   // },
+  mounted () {
+    console.log(this.$slots.default[0].componentOptions.propsData.index)
+  },
   render () {
     return (
       <div class='tabs'>
