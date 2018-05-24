@@ -1,5 +1,19 @@
 <template>
   <section class="real-app" >
+    <div class="tab-container">
+      <tabs :value="tabValue" @change="handleChangeTab" >
+        <tab label="tab1" index="1" >
+          <span>tab content 1</span>
+        </tab>
+        <tab index="2">
+          <span slot="label" style="color: red" >tab2</span>
+          <span>tab content 2</span>
+        </tab>
+        <tab label="tab3" index="3">
+          <span>tab content 3</span>
+        </tab>
+      </tabs>
+    </div>
     <input
       type="text"
       class="add-input"
@@ -13,7 +27,7 @@
       :key="todo.id"
       @del="deleteTodo"
     />
-    <Tabs
+    <helper
       :filter="filter"
       :todos="todos"
       @toggle="toggleFilter"
@@ -23,7 +37,7 @@
 </template>
 <script>
 import Item from './item.vue'
-import Tabs from './tabs.vue'
+import Helper from './tabs.vue'
 let id  = 0
 export default {
   // props:['id'],
@@ -33,12 +47,13 @@ export default {
   data() {
     return {
       todos: [],
-      filter: 'all'
+      filter: 'all',
+      tabValue: '1'
     }
   },
   components: {
     Item,
-    Tabs
+    Helper
   },
   computed: {
     filterTodos() {
@@ -66,6 +81,9 @@ export default {
     },
     clearAllCompleted() {
       this.todos = this.todos.filter(todo => !todo.completed)
+    },
+    handleChangeTab (value) {
+      this.tabValue = value
     }
   }
 }
@@ -97,4 +115,7 @@ export default {
   border: none;
   box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
 }
+.tab-container
+  background-color white
+  padding 0 15px;
 </style>
